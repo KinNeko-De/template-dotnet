@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Nils Diekmann",
+  "classifications": [ "Web" ],
+  "identity": "Template.Dotnet.Microservice",
+  "name": "Template for a dotnet microservice",
+  "shortName": "microservice",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "guids": [
+    "9969303C-844D-489D-A5AB-E8AFC3DAD5A5",
+    "2F0BD2B8-9ABF-43B0-AC6A-CC180C0EBBE5",
+    "651A3C2D-DAEF-40F9-AD32-952162DC12D0",
+    "D76FF42A-FA64-4824-BFD5-B0EE2B2C5F37",
+    "A90140C2-96AD-4A93-9D56-DE11F2D511C9",
+    "5627264F-1DAA-47BF-BAC7-A235E4C218FE"
+  ],
+  "symbols": {
+    "name-dotnet": {
+      "type": "parameter",
+      "replaces": "Template.1",
+      "isRequired": "true",
+      "fileRename": "Template.1"
+    },
+    "name-project": {
+      "type": "parameter",
+      "replaces": "Project.1",
+      "isRequired": "true",
+      "fileRename": "Project.1"
+    },
+    "name-dotnet-lower":{
+      "type": "generated",
+      "generator": "casing",
+      "parameters": {
+        "source":"name-dotnet",
+        "toLower": true
+      },
+      "replaces":"template.1"
+    },
+    "name-dotnet-namespace":{
+      "type": "generated",
+      "generator": "regex",
+      "parameters": {
+        "source":"name-dotnet",
+        "steps": [
+        {
+          "regex": "-",
+          "replacement": "_"
+        }
+      ]
+      },
+      "replaces":"Template._1"
+    },
+    "name-project-lower":{
+      "type": "generated",
+      "generator": "casing",
+      "parameters": {
+        "source":"name-project",
+        "toLower": true
+      },
+      "replaces":"project.1"
+    },
+    "name-project-namespace":{
+      "type": "generated",
+      "generator": "regex",
+      "parameters": {
+        "source":"name-project",
+        "steps": [
+        {
+          "regex": "-",
+          "replacement": "_"
+        }
+      ]
+      },
+      "replaces":"Project._1"
+    },
+    "enable-flyway": {
+      "type": "parameter",
+      "dataType": "bool",
+      "defaultValue": "false"
+    },
+    "flyway": {
+      "type": "derived",
+      "valueSource": "enable-flyway",
+      "valueTransform": "NoTransform"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageType>Template</PackageType>
+    <PackageVersion>1.0.0</PackageVersion>
+    <PackageId>kinneko-de.template.dotnet</PackageId>
+    <Title>KinNeko-De.Template.Dotnet</Title>
+    <Authors>Nils Diekmann</Authors>
+    <Description>Templates for dotnet</Description>
+    <PackageTags>dotnet-new;templates</PackageTags>
+
+    <TargetFramework>netstandard2.1</TargetFramework>
+
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>content</ContentTargetFolders>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+    <NoDefaultExcludes>true</NoDefaultExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="**\*" Exclude="**\bin\**;**\obj\**;**\publish\**;**\.vs\**;**\.vscode\**;kinneko-de.template.dotnet*.nupkg;build-and-install-templates.cmd;templatepack.csproj" />
+    <Compile Remove="**\*" />
+  </ItemGroup>
+
+</Project>
