@@ -31,7 +31,8 @@ dotnet new microservice --name-dotnet <MyNameOfSolution> --name-project <MyNameO
 # Replacing variables
 
 ***From dotnet templating***
-Choose the right output depending of your context
+
+Choose the right output depending of your context.
 
 Transform | Input | Output
 -------|------|--------
