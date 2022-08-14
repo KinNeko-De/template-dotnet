@@ -1,7 +1,7 @@
 **Automation is necessary for lazy people**
 
 # Template
-Project for all templates
+Project for dotnet templates
 
 # Install templates
 On windows run ``` build-and-install-templates.cmd ``` to install all templates.
