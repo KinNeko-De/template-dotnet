@@ -46,12 +46,12 @@ Lowercase Class Name | Template.1 | template__1
 ***Full mapping***
 Transform | sourceName | name | generated replacement
 -------|------|--------|--------
-Identity             | Template.1 | My-App | Template.1 -> My-App
-Namespace            | Template.1 | My-App | Template._1 -> My_App
-Class Name           | Template.1 | My-App | Template__1 -> My_App 
-Lowercase Identity   | Template.1 | My-App | template.1 -> my-app
-Lowercase Namespace  | Template.1 | My-App | template._1 -> my_app
-Lowercase Class Name | Template.1 | My-App | template__1 -> my_app
+Identity             | Template.1 | My-App.1 | Template.1 -> My-App.1
+Namespace            | Template.1 | My-App.1 | Template._1 -> My_App.1
+Class Name           | Template.1 | My-App.1 | Template__1 -> My_App_1 
+Lowercase Identity   | Template.1 | My-App.1 | template.1 -> my-app.1
+Lowercase Namespace  | Template.1 | My-App.1 | template._1 -> my_app.1
+Lowercase Class Name | Template.1 | My-App.1 | template__1 -> my_app_1
 
 
 # Sources
