@@ -1,0 +1,36 @@
+on:
+  push:
+    branches: [ "master" ]
+    paths-ignore:
+      - '**/**.md'
+      - 'docs/**'
+  pull_request:
+    branches: [ "master" ]
+    paths-ignore:
+      - '**/**.md'
+      - 'docs/**'
+      
+env:
+  SEMANTIC_VERSION: 0.1.${{github.run_number}}
+  
+concurrency: template-dotnet-${{ github.ref }}
+
+name: template-dotnet
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore -c Release -p:Version=${{ env.SEMANTIC_VERSION }}
+    - name: Pack
+      run: dotnet pack   
+    - name: Publish
+      run: dotnet nuget push
