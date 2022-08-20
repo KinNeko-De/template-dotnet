@@ -1,0 +1,51 @@
+on:
+  #push:
+  #  paths-ignore:
+  #    - '**/**.md'
+  #    - 'docs/**'
+  pull_request:
+    branches: [ "master" ]
+    paths-ignore:
+      - '**/**.md'
+      - 'docs/**'
+      
+env:
+  SEMANTIC_VERSION: 0.1.${{github.run_number}}
+
+name: template-dotnet
+
+jobs:
+  publish_template:
+    name: "Pack template-dotnet and publish it"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Extract version_suffix
+      id: version_suffix
+      run: |
+        if [[ ${{ github.event_name }} == 'pull_request' ]]; then
+          echo 'for pull request pipeline'
+          OUTPUT=${GITHUB_HEAD_REF##*/}
+        else
+          if [[ "${GITHUB_REF}" == "${{ github.event.repository.default_branch }}" ]]; then
+            echo 'for default branch pipeline'
+            OUTPUT=''
+          else
+            echo 'for feature branch pipeline'
+            OUTPUT=${GITHUB_REF##*/}
+          fi
+        fi
+        echo 'version_suffix: ' $OUTPUT
+        echo "::set-output name=version_suffix::$OUTPUT"
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} --version-suffix ${{ steps.version_suffix.outputs.version_suffix }}
+    - name: Pack
+      run: dotnet pack --no-restore --no-build -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} --version-suffix ${{ steps.version_suffix.outputs.version_suffix }}
+    #- name: Publish
+    #  run: dotnet nuget push **\**.nupkg --source "https://nuget.pkg.github.com/KinNeko-De" --api-key ${{secrets.NUGET_PUSH_API_KEY_GITHUB}}
