@@ -27,7 +27,7 @@ jobs:
           echo 'for pull request pipeline'
           OUTPUT=${GITHUB_HEAD_REF##*/}
         else
-          echo ${github.ref}
+          echo ${{ github.ref }}
           if [[ "${GITHUB_REF}" == "${{ github.event.repository.default_branch }}" ]]; then
             echo 'for default branch pipeline'
             OUTPUT=''
