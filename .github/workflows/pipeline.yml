@@ -24,8 +24,8 @@ jobs:
     steps:
     - name: Extract version_suffix
       id: version_suffix
+      shell: bash
       run: |
-
         #if [[ ${{ github.event_name }} == 'pull_request' ]]; then
         #  echo 'for pull request pipeline'
         #  echo "::set-output name=version_suffix::${GITHUB_HEAD_REF}"
@@ -41,19 +41,18 @@ jobs:
 
         if [[ ${{ github.event_name }} == 'pull_request' ]]; then
           echo 'for pull request pipeline'
-          output = ${GITHUB_HEAD_REF}
+          OUTPUT=${GITHUB_HEAD_REF}
         else
           if [[ "${GITHUB_REF}" == "${{ github.event.repository.default_branch }}" ]]; then
             echo 'for default branch pipeline'
-            output = ''
+            OUTPUT=''
           else
             echo 'for default branch pipeline'
-            output = ${GITHUB_REF}
+            OUTPUT=${GITHUB_REF}
           fi
         fi
-        echo 'version_suffix: ' $output
-        echo "::set-output name=version_suffix::$output"
-        
+        echo 'version_suffix: ' $OUTPUT
+        echo "::set-output name=version_suffix::$OUTPUT"
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
