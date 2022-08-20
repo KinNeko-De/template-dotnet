@@ -32,6 +32,6 @@ jobs:
     - name: Build
       run: dotnet build --no-restore -c Release -p:Version=${{ env.SEMANTIC_VERSION }}
     - name: Pack
-      run: dotnet pack --no-restore --no-build -c Release
+      run: dotnet pack --no-restore --no-build -c Release -p:Version=${{ env.SEMANTIC_VERSION }}
     - name: Publish
       run: dotnet nuget push **\**.nupkg --source "https://nuget.pkg.github.com/KinNeko-De" --api-key ${{secrets.NUGET_PUSH_API_KEY_GITHUB}}
