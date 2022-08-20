@@ -53,7 +53,10 @@ jobs:
       run: |
         ARGS=()
         if [[ ${{ steps.version_suffix.outputs.use_version_suffix }} ]]; then
+          echo "version suffix"
           ARGS+= ('--version-suffix' ${{ steps.version_suffix.outputs.version_suffix }})
+        else
+          echo "no version suffix"
         fi
         dotnet build --no-restore -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} "$ARGS[@]"
     - name: Pack
