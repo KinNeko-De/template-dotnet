@@ -24,21 +24,7 @@ jobs:
     steps:
     - name: Extract version_suffix
       id: version_suffix
-      shell: bash
       run: |
-        #if [[ ${{ github.event_name }} == 'pull_request' ]]; then
-        #  echo 'for pull request pipeline'
-        #  echo "::set-output name=version_suffix::${GITHUB_HEAD_REF}"
-        #else
-        #  if [[ "${GITHUB_REF}" == "${{ github.event.repository.default_branch }}" ]]; then
-        #    echo 'for default branch pipeline'
-        #    echo "::set-output name=version_suffix::"
-        #  else
-        #    echo 'for default branch pipeline'
-        #    echo "::set-output name=version_suffix::${GITHUB_REF}"
-        #  fi
-        #fi
-
         if [[ ${{ github.event_name }} == 'pull_request' ]]; then
           echo 'for pull request pipeline'
           OUTPUT=${GITHUB_HEAD_REF}
