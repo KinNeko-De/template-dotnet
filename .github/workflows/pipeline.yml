@@ -1,14 +1,13 @@
 on:
   push:
-    branches: [ "master" ]
     paths-ignore:
       - '**/**.md'
       - 'docs/**'
-  pull_request:
-    branches: [ "master" ]
-    paths-ignore:
-      - '**/**.md'
-      - 'docs/**'
+  #pull_request:
+    #branches: [ "master" ]
+    #paths-ignore:
+    #  - '**/**.md'
+    #  - 'docs/**'
       
 env:
   SEMANTIC_VERSION: 0.1.${{github.run_number}}
