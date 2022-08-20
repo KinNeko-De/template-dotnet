@@ -35,7 +35,8 @@ jobs:
           else
             echo 'for default branch pipeline'
             echo "::set-output name=version_suffix::${GITHUB_REF}"
-        if
+          fi
+        fi
         echo '${{ steps.version_suffix.outputs.version_suffix }}' ${{ steps.version_suffix.outputs.version_suffix }}
     - uses: actions/checkout@v3
     - name: Setup .NET
