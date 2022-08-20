@@ -5,7 +5,8 @@ Project for dotnet templates
 
 # Install templates
 ## local version
-You can build a local prelease version and install this to test it
+You can build a local prelease version and install this to test it.
+
 On windows run ``` build-and-install-templates.cmd ``` to install all templates.
 
 ## install version from nuget feed
@@ -18,7 +19,6 @@ dotnet nuget add source https://nuget.pkg.github.com/KinNeko-De/index.json --nam
 ```bat
 dotnet new --install kinneko-de.template.dotnet --nuget-source="github"
 ```
-dotnet new -i .\kinneko-de.template.dotnet.0.1.0-local.nupkg
 
 # New project
 The template must be used to create new projects
