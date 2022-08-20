@@ -11,8 +11,6 @@ on:
       
 env:
   SEMANTIC_VERSION: 0.1.${{github.run_number}}
-  
-concurrency: template-dotnet-${{ github.ref }}
 
 name: template-dotnet
 
