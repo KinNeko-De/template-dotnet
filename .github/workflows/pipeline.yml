@@ -52,7 +52,7 @@ jobs:
     - name: Build
       run: |
         ARGS=()
-        if ${{ steps.version_suffix.outputs.use_version_suffix }} then
+        if [[ "${{ steps.version_suffix.outputs.use_version_suffix }}" == 'false' ]]; then
           echo "version suffix"
           ARGS+= ('--version-suffix' ${{ steps.version_suffix.outputs.version_suffix }})
         else
@@ -61,8 +61,6 @@ jobs:
         dotnet build --no-restore -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} "$ARGS[@]"
     - name: Pack
       run: |
-        ARGS=()
-        
         dotnet pack --no-restore --no-build -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} 
         if [[ "${{ steps.version_suffix.outputs.version_suffix }}" != '' ]]; then
           --version-suffix ${{ steps.version_suffix.outputs.version_suffix }}
