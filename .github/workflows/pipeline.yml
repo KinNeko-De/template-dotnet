@@ -49,7 +49,8 @@ jobs:
         if [[ "${{ steps.version_suffix.outputs.use_version_suffix }}" == 'true' ]]; then
           ARGS+=('--version-suffix' "${{ steps.version_suffix.outputs.version_suffix }}")
         fi
-        echo "::set-output name=optional_parameters::$ARGS"
+        echo 'parameter' ${ARGS[@]}
+        echo "::set-output name=optional_parameters::${ARGS[@]}"
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
@@ -59,7 +60,7 @@ jobs:
       run: dotnet restore
     - name: Build
       run: |
-       dotnet build --no-restore -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} "${{ steps.dotnet.outputs.optional_parameters[@] }}"
+       dotnet build --no-restore -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} "${{ steps.dotnet.outputs.optional_parameters }}"
     - name: Pack
       run: |
         if [[ "${{ steps.version_suffix.outputs.use_version_suffix }}" == 'true' ]]; then
