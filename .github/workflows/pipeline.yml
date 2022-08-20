@@ -65,5 +65,5 @@ jobs:
     - name: Pack
       run: |
         dotnet pack --no-restore --no-build -c Release ${{ steps.dotnet.outputs.parameters }}
-    #- name: Publish
-    #  run: dotnet nuget push **\**.nupkg --source "https://nuget.pkg.github.com/KinNeko-De" --api-key ${{secrets.NUGET_PUSH_API_KEY_GITHUB}}
+    - name: Publish
+      run: dotnet nuget push **\**.nupkg --source "https://nuget.pkg.github.com/KinNeko-De" --api-key ${{secrets.NUGET_PUSH_API_KEY_GITHUB}}
