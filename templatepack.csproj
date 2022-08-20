@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="**\*" Exclude="**\bin\**;**\obj\**;**\publish\**;**\.vs\**;**\.vscode\**;kinneko-de.template.dotnet*.nupkg;build-and-install-templates.cmd;templatepack.csproj" />
+    <Content Include="**\*" Exclude="**\bin\**;**\obj\**;**\publish\**;**\.vs\**;**\.vscode\**;**\.git\**;**\.github\**;.gitignore;kinneko-de.template.dotnet*.nupkg;build-and-install-templates.cmd;templatepack.csproj" />
     <Compile Remove="**\*" />
   </ItemGroup>
 
