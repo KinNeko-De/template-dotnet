@@ -25,17 +25,21 @@ jobs:
       run: |
         if [[ ${{ github.event_name }} == 'pull_request' ]]; then
           echo 'for pull request pipeline'
+          USE=true
           OUTPUT=${GITHUB_HEAD_REF##*/}
         else
           if [[ ${{ github.ref }} == "refs/heads/${{ github.event.repository.default_branch }}" ]]; then
             echo 'for default branch pipeline'
+            USE=false
             OUTPUT=''
           else
             echo 'for feature branch pipeline'
+            USE=true
             OUTPUT=${GITHUB_REF##*/}
           fi
         fi
         echo 'version_suffix: ' $OUTPUT
+        echo "::set-output name=use_version_suffix::$USE"
         echo "::set-output name=version_suffix::$OUTPUT"
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -47,7 +51,7 @@ jobs:
     - name: Build
       run: |
         dotnet build --no-restore -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }}
-        if [[ ${{ steps.version_suffix.outputs.version_suffix }} != '' ]]; then
+        if [[ ${{ steps.version_suffix.outputs.use_version_suffix }} ]]; then
           --version-suffix ${{ steps.version_suffix.outputs.version_suffix }}
         fi
     - name: Pack
