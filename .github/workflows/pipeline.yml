@@ -25,7 +25,7 @@ jobs:
     - name: Extract version_suffix
       id: version_suffix
       run: |
-        echo "::set-output name=version_suffix::${GITHUB_REF#refs/heads/}"
+        echo "::set-output name=version_suffix::${GITHUB_REF}"
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
@@ -34,7 +34,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore -c Release -p:Version=${{ env.SEMANTIC_VERSION }}
+      run: dotnet build --no-restore -c Release -p:Version=${{ env.SEMANTIC_VERSION }} --version-suffix=${{ steps.version_suffix.outputs.version_suffix }}
     - name: Pack
       run: dotnet pack --no-restore --no-build -c Release -p:PackageVersion=${{ env.SEMANTIC_VERSION }} --version-suffix=${{ steps.version_suffix.outputs.version_suffix }}
     - name: Publish
