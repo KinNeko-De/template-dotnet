@@ -57,7 +57,7 @@ jobs:
         else
           echo "no version suffix"
         fi
-        dotnet build --no-restore -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} "$ARGS[@]"
+        dotnet build --no-restore -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} "${ARGS[@]}"
     - name: Pack
       run: |
         dotnet pack --no-restore --no-build -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} 
