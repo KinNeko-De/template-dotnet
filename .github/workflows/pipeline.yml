@@ -41,14 +41,14 @@ jobs:
 
         if [[ ${{ github.event_name }} == 'pull_request' ]]; then
           echo 'for pull request pipeline'
-          version_suffix = ${GITHUB_HEAD_REF}"
+          version_suffix = ${GITHUB_HEAD_REF}
         else
           if [[ "${GITHUB_REF}" == "${{ github.event.repository.default_branch }}" ]]; then
             echo 'for default branch pipeline'
             version_suffix = ''
           else
             echo 'for default branch pipeline'
-            version_suffix = ${GITHUB_REF}"
+            version_suffix = ${GITHUB_REF}
           fi
         fi
         echo 'version_suffix: ' $version_suffix
