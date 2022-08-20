@@ -61,9 +61,13 @@ jobs:
         dotnet build --no-restore -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} "${ARGS[@]}"
     - name: Pack
       run: |
-        dotnet pack --no-restore --no-build -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} 
-        if [[ "${{ steps.version_suffix.outputs.version_suffix }}" != '' ]]; then
-          --version-suffix ${{ steps.version_suffix.outputs.version_suffix }}
+        if [[ "${{ steps.version_suffix.outputs.use_version_suffix }}" == 'true' ]]; then
+          echo "version suffix"
+          ARGS=('--version-suffix' "${{ steps.version_suffix.outputs.version_suffix }}")
+        else
+          echo "no version suffix"
+          ARGS=()
         fi
+        dotnet pack --no-restore --no-build -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} "${ARGS[@]}"
     #- name: Publish
     #  run: dotnet nuget push **\**.nupkg --source "https://nuget.pkg.github.com/KinNeko-De" --api-key ${{secrets.NUGET_PUSH_API_KEY_GITHUB}}
