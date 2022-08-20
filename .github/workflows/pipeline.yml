@@ -53,7 +53,8 @@ jobs:
       run: |
         if [[ "${{ steps.version_suffix.outputs.use_version_suffix }}" == 'true' ]]; then
           echo "version suffix"
-          ARGS=('--version-suffix' "${{ steps.version_suffix.outputs.version_suffix }}")
+          ARGS=()
+          ARGS+=('--version-suffix' "${{ steps.version_suffix.outputs.version_suffix }}")
         else
           echo "no version suffix"
           ARGS=()
