@@ -18,7 +18,7 @@ concurrency: template-dotnet-${{ github.ref }}
 name: template-dotnet
 
 jobs:
-  build:
+  publish_template:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -31,6 +31,6 @@ jobs:
     - name: Build
       run: dotnet build --no-restore -c Release -p:Version=${{ env.SEMANTIC_VERSION }}
     - name: Pack
-      run: dotnet pack   
+      run: dotnet pack --no-restore --no-build -c Release
     - name: Publish
-      run: dotnet nuget push
+      run: dotnet nuget push --source "github"
