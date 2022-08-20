@@ -25,7 +25,7 @@ jobs:
       run: |
         if [[ ${{ github.event_name }} == 'pull_request' ]]; then
           echo 'for pull request pipeline'
-          OUTPUT=${{GITHUB_HEAD_REF##*/}
+          OUTPUT=${GITHUB_HEAD_REF##*/}
         else
           if [[ ${{ github.ref }} == "refs/heads/${{ github.event.repository.default_branch }}" ]]; then
             echo 'for default branch pipeline'
