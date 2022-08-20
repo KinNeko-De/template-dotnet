@@ -42,6 +42,14 @@ jobs:
         echo 'version_suffix: ' $OUTPUT
         echo "::set-output name=use_version_suffix::$USE"
         echo "::set-output name=version_suffix::$OUTPUT"
+    - name: Set dotnet parameter
+      id: dotnet
+      run: |
+        ARGS=()
+        if [[ "${{ steps.version_suffix.outputs.use_version_suffix }}" == 'true' ]]; then
+          ARGS+=('--version-suffix' "${{ steps.version_suffix.outputs.version_suffix }}")
+        fi
+        echo "::set-output name=optional_parameters::$ARGS"
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
@@ -51,15 +59,7 @@ jobs:
       run: dotnet restore
     - name: Build
       run: |
-        if [[ "${{ steps.version_suffix.outputs.use_version_suffix }}" == 'true' ]]; then
-          echo "version suffix"
-          ARGS=()
-          ARGS+=('--version-suffix' "${{ steps.version_suffix.outputs.version_suffix }}")
-        else
-          echo "no version suffix"
-          ARGS=()
-        fi
-        dotnet build --no-restore -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} "${ARGS[@]}"
+       dotnet build --no-restore -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} "${{ steps.dotnet.outputs.optional_parameters[@] }}"
     - name: Pack
       run: |
         if [[ "${{ steps.version_suffix.outputs.use_version_suffix }}" == 'true' ]]; then
