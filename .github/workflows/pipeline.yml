@@ -25,8 +25,18 @@ jobs:
     - name: Extract version_suffix
       id: version_suffix
       run: |
-        echo "::set-output name=version_suffix::${GITHUB_HEAD_REF}"
-        # echo "::set-output name=version_suffix::${GITHUB_REF}"
+        if [[ ${{ github.event_name }} == 'pull_request' ]]; then
+          echo 'for pull request pipeline'
+          echo "::set-output name=version_suffix::${GITHUB_HEAD_REF}"
+        else
+          if [[ "${GITHUB_REF}" == "${{ github.event.repository.default_branch }}" ]]; then
+            echo 'for default branch pipeline'
+            echo "::set-output name=version_suffix::"
+          else
+            echo 'for default branch pipeline'
+            echo "::set-output name=version_suffix::${GITHUB_REF}"
+        if
+        echo '${{ steps.version_suffix.outputs.version_suffix }}' ${{ steps.version_suffix.outputs.version_suffix }}
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
@@ -35,10 +45,8 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      #run: dotnet build --no-restore -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} --version-suffix ${{ steps.version_suffix.outputs.version_suffix }}
-      run: dotnet build --no-restore -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} --version-suffix setup-pipeline
+      run: dotnet build --no-restore -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} --version-suffix ${{ steps.version_suffix.outputs.version_suffix }}
     - name: Pack
-      #run: dotnet pack --no-restore --no-build -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} --version-suffix ${{ steps.version_suffix.outputs.version_suffix }}
-      run: dotnet pack --no-restore --no-build -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} --version-suffix setup-pipeline
+      run: dotnet pack --no-restore --no-build -c Release -p:VersionPrefix=${{ env.SEMANTIC_VERSION }} --version-suffix ${{ steps.version_suffix.outputs.version_suffix }}
     #- name: Publish
     #  run: dotnet nuget push **\**.nupkg --source "https://nuget.pkg.github.com/KinNeko-De" --api-key ${{secrets.NUGET_PUSH_API_KEY_GITHUB}}
