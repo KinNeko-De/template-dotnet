@@ -32,7 +32,7 @@ jobs:
             echo 'for default branch pipeline'
             OUTPUT=''
           else
-            echo 'for default branch pipeline'
+            echo 'for feature branch pipeline'
             OUTPUT=${GITHUB_REF##*/}
           fi
         fi
