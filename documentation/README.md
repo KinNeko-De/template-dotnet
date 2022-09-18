@@ -9,7 +9,7 @@ Now follow the instruction
 `dotnet new --install kinneko-de.template.dotnet::0.1.60`
 
 # Open Question:
-I got an warning.. but only one time. Maybe because of the " around github
+1. Question: I got an warning.. but only one time. Maybe because of the " around github
 
 `dotnet new --install kinneko-de.template.dotnet --nuget-source="github"`
 
@@ -22,3 +22,10 @@ I got an warning.. but only one time. Maybe because of the " around github
 `Vorlagenname                        Kurzname      Sprache  Tags`\
 `----------------------------------  ------------  -------  ----`\
 `Template for a dotnet microservice  microservice  [C#]     Web`
+
+Answer: --nuget-source parameter is invalid here
+
+
+2. Question: My access suddenly disappear.
+
+Answer: Not yet. I reinstalled the source.
