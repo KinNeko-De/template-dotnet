@@ -2,24 +2,24 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>1.0.0</PackageVersion>
+    <VersionPrefix>0.1.0</VersionPrefix>
     <PackageId>kinneko-de.template.dotnet</PackageId>
     <Title>KinNeko-De.Template.Dotnet</Title>
     <Authors>Nils Diekmann</Authors>
-    <Description>Templates for dotnet</Description>
+    <Description>Templates for Dotnet. Currently supported languages are: C#</Description>
     <PackageTags>dotnet-new;templates</PackageTags>
-
     <TargetFramework>netstandard2.1</TargetFramework>
-
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>content</ContentTargetFolders>
     <NoWarn>$(NoWarn);NU5128</NoWarn>
     <NoDefaultExcludes>true</NoDefaultExcludes>
+    <RepositoryUrl>https://github.com/KinNeko-De/template-dotnet</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="**\*" Exclude="**\bin\**;**\obj\**;**\publish\**;**\.vs\**;**\.vscode\**;kinneko-de.template.dotnet*.nupkg;build-and-install-templates.cmd;templatepack.csproj" />
+    <Content Include="**\*" Exclude="**\bin\**;**\obj\**;**\publish\**;**\.vs\**;**\.vscode\**;**\.git\**;**\.github\**;.gitignore;kinneko-de.template.dotnet*.nupkg;build-and-install-templates.cmd;templatepack.csproj" />
     <Compile Remove="**\*" />
   </ItemGroup>
 

@@ -1,0 +1,69 @@
+on:
+  push:
+    branches: [ "master" ]
+    paths-ignore:
+      - '**/**.md'
+      - 'docs/**'
+  pull_request:
+    branches: [ "master" ]
+    paths-ignore:
+      - '**/**.md'
+      - 'docs/**'
+      
+env:
+  SEMANTIC_VERSION: 0.1.${{github.run_number}}
+
+name: template-dotnet
+
+jobs:
+  publish_template:
+    name: "Pack template-dotnet and publish it"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Extract version_suffix
+      id: version_suffix
+      run: |
+        if [[ ${{ github.event_name }} == 'pull_request' ]]; then
+          echo 'for pull request pipeline'
+          USE=true
+          OUTPUT=${GITHUB_HEAD_REF##*/}
+        else
+          if [[ ${{ github.ref }} == "refs/heads/${{ github.event.repository.default_branch }}" ]]; then
+            echo 'for default branch pipeline'
+            USE=false
+            OUTPUT=''
+          else
+            echo 'for feature branch pipeline'
+            USE=true
+            OUTPUT=${GITHUB_REF##*/}
+          fi
+        fi
+        echo 'use_version_suffix' $USE
+        echo 'version_suffix: ' $OUTPUT
+        echo "::set-output name=use_version_suffix::$USE"
+        echo "::set-output name=version_suffix::$OUTPUT"
+    - name: Set dotnet parameter
+      id: dotnet
+      run: |
+        ARGS=()
+        ARGS+=("-p:VersionPrefix=${{ env.SEMANTIC_VERSION }}")
+        if [[ "${{ steps.version_suffix.outputs.use_version_suffix }}" == 'true' ]]; then
+          ARGS+=('--version-suffix' "${{ steps.version_suffix.outputs.version_suffix }}")
+        fi
+        echo 'parameters' ${ARGS[@]}
+        echo "::set-output name=parameters::${ARGS[@]}"
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: |
+       dotnet build --no-restore -c Release ${{ steps.dotnet.outputs.parameters }}
+    - name: Pack
+      run: |
+        dotnet pack --no-restore --no-build -c Release ${{ steps.dotnet.outputs.parameters }}
+    - name: Publish
+      run: dotnet nuget push **\**.nupkg --source "https://nuget.pkg.github.com/KinNeko-De" --api-key ${{secrets.NUGET_PUSH_API_KEY_GITHUB}}
