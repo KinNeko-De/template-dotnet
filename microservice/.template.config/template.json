@@ -30,51 +30,80 @@
       "isRequired": "true",
       "fileRename": "Project.1"
     },
-    "name-dotnet-lower":{
+    "name-database": {
+      "type": "parameter",
+      "replaces": "Database.1",
+      "isRequired": "true",
+      "fileRename": "Database.1"
+    },
+    "name-dotnet-lower": {
       "type": "generated",
       "generator": "casing",
       "parameters": {
-        "source":"name-dotnet",
+        "source": "name-dotnet",
         "toLower": true
       },
-      "replaces":"template.1"
+      "replaces": "template.1"
     },
-    "name-dotnet-namespace":{
+    "name-dotnet-namespace": {
       "type": "generated",
       "generator": "regex",
       "parameters": {
-        "source":"name-dotnet",
+        "source": "name-dotnet",
         "steps": [
-        {
-          "regex": "-",
-          "replacement": "_"
-        }
-      ]
+          {
+            "regex": "-",
+            "replacement": "_"
+          }
+        ]
       },
-      "replaces":"Template._1"
+      "replaces": "Template._1"
     },
-    "name-project-lower":{
+    "name-project-lower": {
       "type": "generated",
       "generator": "casing",
       "parameters": {
-        "source":"name-project",
+        "source": "name-project",
         "toLower": true
       },
-      "replaces":"project.1"
+      "replaces": "project.1"
     },
-    "name-project-namespace":{
+    "name-project-namespace": {
       "type": "generated",
       "generator": "regex",
       "parameters": {
-        "source":"name-project",
+        "source": "name-project",
         "steps": [
-        {
-          "regex": "-",
-          "replacement": "_"
-        }
-      ]
+          {
+            "regex": "-",
+            "replacement": "_"
+          }
+        ]
       },
-      "replaces":"Project._1"
+      "replaces": "Project._1"
+    },
+    "name-database-lower": {
+      "type": "generated",
+      "generator": "casing",
+      "parameters": {
+        "source": "name-database",
+        "toLower": true
+      },
+      "replaces": "database.1"
+    },
+    "name-database-namespace": {
+      "type": "generated",
+      "generator": "regex",
+      "parameters": {
+        "source": "name-database",
+        "steps": [
+          {
+            "regex": "-",
+            "replacement": "_"
+          }
+        ]
+      },
+      "replaces": "Database._1"
     },
     "enable-flyway": {
       "type": "parameter",
