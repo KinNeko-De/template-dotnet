@@ -20,6 +20,8 @@ dotnet nuget add source https://nuget.pkg.github.com/KinNeko-De/index.json --nam
 dotnet new --install kinneko-de.template.dotnet --nuget-source="github"
 ```
 
+Read the [documentation](documentation/README.md) for more information.
+
 # New project
 The template must be used to create new projects
 
