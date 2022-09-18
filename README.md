@@ -17,7 +17,7 @@ dotnet nuget add source https://nuget.pkg.github.com/KinNeko-De/index.json --nam
 ```
 3. Install the template
 ```bat
-dotnet new --install kinneko-de.template.dotnet --nuget-source=github
+dotnet new --install kinneko-de.template.dotnet
 ```
 
 Read the [documentation](documentation/README.md) for more information.
