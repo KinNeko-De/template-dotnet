@@ -30,11 +30,11 @@
       "isRequired": "true",
       "fileRename": "Project.1"
     },
-    "name-database": {
+    "name-domain": {
       "type": "parameter",
-      "replaces": "Database.1",
+      "replaces": "Domain.1",
       "isRequired": "true",
-      "fileRename": "Database.1"
+      "fileRename": "Domain.1"
     },
     "name-dotnet-lower": {
       "type": "generated",
@@ -82,20 +82,20 @@
       },
       "replaces": "Project._1"
     },
-    "name-database-lower": {
+    "name-domain-lower": {
       "type": "generated",
       "generator": "casing",
       "parameters": {
-        "source": "name-database",
+        "source": "name-domain",
         "toLower": true
       },
-      "replaces": "database.1"
+      "replaces": "domain.1"
     },
-    "name-database-namespace": {
+    "name-domain-namespace": {
       "type": "generated",
       "generator": "regex",
       "parameters": {
-        "source": "name-database",
+        "source": "name-domain",
         "steps": [
           {
             "regex": "-",
@@ -103,7 +103,7 @@
           }
         ]
       },
-      "replaces": "Database._1"
+      "replaces": "Domain._1"
     },
     "enable-flyway": {
       "type": "parameter",
