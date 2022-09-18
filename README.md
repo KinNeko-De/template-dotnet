@@ -70,6 +70,8 @@ Lowercase Identity   | Template.1 | My-App.1 | template.1 -> my-app.1
 Lowercase Namespace  | Template.1 | My-App.1 | template._1 -> my_app.1
 Lowercase Class Name | Template.1 | My-App.1 | template__1 -> my_app_1
 
+***Note***
+Not all replacement are already implemented in the template
 
 # Sources
 [Dotnet Templating](https://github.com/dotnet/templating/wiki)
