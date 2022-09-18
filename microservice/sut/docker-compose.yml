@@ -1,11 +1,11 @@
 version: '3.9'
 
 services:
-  project.1-template.1-svc:
-    image: project.1.template.1-svc
+  project.1-domain.1-svc:
+    image: project.1.domain.1-svc
     networks:
       - dev-net
-    container_name: project.1.template.1-svc
+    container_name: project.1.domain.1-svc
     build:
       dockerfile: dockerfile
     ports:

@@ -1,8 +1,8 @@
 version: '3.9'
 services:
-  project.1-database.1-db:
+  project.1-domain.1-db:
     image: postgres
-    container_name: project.1-database.1-db
+    container_name: project.1-domain.1-db
     networks:
       - dev-net
     environment:
@@ -17,14 +17,14 @@ services:
       timeout: 3s
       start_period: 5s
       retries: 5
-  project.1-template.1-db-patch:
+  project.1-domain.1-db-patch:
     image: flyway/flyway
-    command: migrate -user=${DB_USER} -password=${DB_PASSWORD} -url="jdbc:postgresql://project.1-database.1-db:5432/${DB_DATABASE}" -schemas=${DB_SCHEMA} -locations='filesystem:/sql'
+    command: migrate -user=${DB_USER} -password=${DB_PASSWORD} -url="jdbc:postgresql://project.1-domain.1-db:5432/${DB_DATABASE}" -schemas=${DB_SCHEMA} -locations='filesystem:/sql'
     networks:
       - dev-net
-    container_name: project.1-database.1-db-patch
+    container_name: project.1-domain.1-db-patch
     depends_on:
-      project.1-database.1-db:
+      project.1-domain.1-db:
         condition: service_healthy
     volumes:
       - ./patch:/sql
