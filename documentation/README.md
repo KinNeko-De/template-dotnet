@@ -26,6 +26,6 @@ Now follow the instruction
 Answer: --nuget-source parameter is invalid here
 
 
-2. Question: My access suddenly disappear.
+2. Question: My access suddenly disappear and i pushed a new version of the package while my cmd was open
 
-Answer: Not yet. I reinstalled the source.
+Answer: Not yet. I reinstalled the source. Or just create a new cmd.
