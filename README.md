@@ -41,7 +41,7 @@ dotnet new microservice --name-dotnet SvcOrder --name-project Restaurant --name-
 If the microservice use a database, you must use flyway to patch the database. Use the ```--enable-flyway``` flag.
 
 ```bat
-dotnet new microservice --name-dotnet <MyNameOfSolution> --name-project <MyNameOfProject> --enable-flyway
+dotnet new microservice [..] --enable-flyway
 ```
 
 # Replacing variables
