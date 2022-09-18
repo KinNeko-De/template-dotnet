@@ -9,4 +9,4 @@ EXPOSE 8080
 EXPOSE 3118
 
 COPY ./publish .
-ENTRYPOINT ["dotnet", "Template.1.dll"]
+ENTRYPOINT ["dotnet", "Project.1.Template.1.dll"]
