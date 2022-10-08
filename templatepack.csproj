@@ -14,12 +14,14 @@
     <ContentTargetFolders>content</ContentTargetFolders>
     <NoWarn>$(NoWarn);NU5128</NoWarn>
     <NoDefaultExcludes>true</NoDefaultExcludes>
+	<PackageProjectUrl>https://github.com/KinNeko-De/template-dotnet</PackageProjectUrl>
     <RepositoryUrl>https://github.com/KinNeko-De/template-dotnet</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+	<PackageReadmeFile>content/README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="**\*" Exclude="**\bin\**;**\obj\**;**\publish\**;**\.vs\**;**\.vscode\**;**\.git\**;**\.github\**;.gitignore;kinneko-de.template.dotnet*.nupkg;build-and-install-templates.cmd;templatepack.csproj" />
+    <Content Include="**\*" Exclude="**\bin\**;**\obj\**;**\publish\**;**\.vs\**;**\.vscode\**;**\.git\**;.github\**;.gitignore;kinneko-de.template.dotnet*.nupkg;build-and-install-templates.cmd;templatepack.csproj" />
     <Compile Remove="**\*" />
   </ItemGroup>
 
