@@ -44,6 +44,10 @@ public class Program
 
             return 0;
         }
+        catch (OperationCanceledException)
+        {
+            return 0;
+        }
         catch (Exception ex)
         {
             SetSerilogDefaultLogger();
