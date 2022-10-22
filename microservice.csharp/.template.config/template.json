@@ -4,7 +4,7 @@
   "classifications": [ "Web" ],
   "name": "Microservice",
   "identity": "Template.Dotnet.Microservice.CSharp",
-  "groupIdentity":"Template.Dotnet.Microservice",
+  "groupIdentity": "Template.Dotnet.Microservice",
   "shortName": "microservice",
   "tags": {
     "language": "C#",
@@ -106,15 +106,58 @@
       },
       "replaces": "Domain._1"
     },
-    "enable-flyway": {
+    "database": {
       "type": "parameter",
       "dataType": "bool",
-      "defaultValue": "false"
+      "defaultValue": "true"
     },
-    "flyway": {
-      "type": "derived",
-      "valueSource": "enable-flyway",
-      "valueTransform": "NoTransform"
+    "database-port": {
+      "type": "parameter",
+      "dataType": "int",
+      "description": "Set a database port. if set to -1 a generated port will be used",
+    },
+    "port-database-generated": {
+      "type": "generated",
+      "generator": "port",
+      "parameters": {
+        "fallback": 23100
+      }
+    },
+    "port-database-replace": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "database-port",
+        "fallbackVariableName": "port-database-generated"
+      },
+      "replaces": "port.database.1"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(!database)",
+          "exclude": [
+            "database/**/*",
+            "tools/database*.cmd"
+          ]
+        }
+      ]
+    }
+  ],
+  "forms": {
+    "invert-database": {
+      "identifier": "evalute",
+      "paramters": {
+        "action": "(!database)"
+      }
+    },
+    "set-database-port": {
+      "identifier": "evalute",
+      "paramters": {
+        "action": "(!database)"
+      }
     }
   }
 }

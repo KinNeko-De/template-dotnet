@@ -34,14 +34,16 @@ dotnet new microservice --name-dotnet <MyNameOfDomain> --name-project <MyNameOfP
 
 *Example*
 ```bat
-dotnet new microservice --name-dotnet SvcOrder --name-project Restaurant --name-domain Order
+dotnet new microservice --name-dotnet SvcExample --name-project Template --name-domain Example
 ``` 
 
 ### Database
-If the microservice use a database, you must use flyway to patch the database. Use the ```--enable-flyway``` flag.
+The microservice is created with a database by default.
+
+If the microservice do not need a database, you must remove the database. Use the ```--database false``` flag.
 
 ```bat
-dotnet new microservice [..] --enable-flyway
+dotnet new microservice [..] --database false
 ```
 
 # Replacing variables
@@ -79,3 +81,5 @@ Not all replacement are already implemented in the template
 [ConditionalReplacement](https://github.com/dotnet/templating/wiki/Conditional-processing-and-comment-syntax)
 
 [Examples](https://github.com/dotnet/dotnet-template-samples)
+
+[SymbolGenerator](https://github.com/dotnet/templating/wiki/Available-Symbols-Generators)
