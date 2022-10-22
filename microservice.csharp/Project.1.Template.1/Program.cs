@@ -184,14 +184,20 @@ public class Program
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             .Enrich.FromLogContext()
             .Enrich.WithProperty("AssemblyVersion", typeof(Program).Assembly.GetName().Version)
+//-:cnd:noEmit
 #if DEBUG
+//+:cnd:noEmit
             .WriteTo.Console(
                 theme: AnsiConsoleTheme.Code,
                 outputTemplate: "[{Timestamp:o}] [{Level:u3}] [{Application}] [{Message}] [{Exception}] [{Properties:j}] {NewLine}"
             )
+//-:cnd:noEmit
 #else
+//+:cnd:noEmit
             .WriteTo.Console(new RenderedCompactJsonFormatter())
+//-:cnd:noEmit
 #endif
+//+:cnd:noEmit
             .CreateLogger();
     }
 }

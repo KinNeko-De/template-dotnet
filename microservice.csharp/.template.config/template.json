@@ -2,12 +2,13 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Nils Diekmann",
   "classifications": [ "Web" ],
-  "identity": "Template.Dotnet.Microservice",
-  "name": "Template for a dotnet microservice",
+  "name": "Microservice",
+  "identity": "Template.Dotnet.Microservice.CSharp",
+  "groupIdentity":"Template.Dotnet.Microservice",
   "shortName": "microservice",
   "tags": {
     "language": "C#",
-    "type": "project"
+    "type": "solution"
   },
   "guids": [
     "9969303C-844D-489D-A5AB-E8AFC3DAD5A5",
