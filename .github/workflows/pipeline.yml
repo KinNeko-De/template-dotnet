@@ -40,8 +40,8 @@ jobs:
         fi
         echo 'use_version_suffix' $USE
         echo 'version_suffix: ' $OUTPUT
-        echo "::set-output name=use_version_suffix::$USE"
-        echo "::set-output name=version_suffix::$OUTPUT"
+        echo "use_version_suffix=$USE" >> $GITHUB_OUTPUT
+        echo "version_suffix=$OUTPUT" >> $GITHUB_OUTPUT
     - name: Set dotnet parameter
       id: dotnet
       run: |
@@ -51,7 +51,7 @@ jobs:
           ARGS+=('--version-suffix' "${{ steps.version_suffix.outputs.version_suffix }}")
         fi
         echo 'parameters' ${ARGS[@]}
-        echo "::set-output name=parameters::${ARGS[@]}"
+        echo "parameters=${ARGS[@]}" >> $GITHUB_OUTPUT
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
