@@ -75,3 +75,4 @@ Not all replacement are already implemented in the template
 
 # Sources
 [Dotnet Templating](https://github.com/dotnet/templating/wiki)
+[ConditionalReplacement](https://github.com/dotnet/templating/wiki/Conditional-processing-and-comment-syntax)
