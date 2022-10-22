@@ -34,7 +34,7 @@ dotnet new microservice --name-dotnet <MyNameOfDomain> --name-project <MyNameOfP
 
 *Example*
 ```bat
-dotnet new microservice --name-dotnet SvcExample --name-project Template --name-domain Example
+dotnet new microservice --name-dotnet Template.SvcExample --name-project Template --name-domain Example
 ``` 
 
 ### Database

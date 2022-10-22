@@ -21,20 +21,23 @@
   "symbols": {
     "name-dotnet": {
       "type": "parameter",
+      "description": "Name of the dotnet solution and dotnet project. Example: Template.SvcExample",
+      "isRequired": true,
       "replaces": "Template.1",
-      "isRequired": "true",
       "fileRename": "Template.1"
     },
     "name-project": {
       "type": "parameter",
+      "description": "Name of the github project. Example: Template",
+      "isRequired": true,
       "replaces": "Project.1",
-      "isRequired": "true",
       "fileRename": "Project.1"
     },
     "name-domain": {
       "type": "parameter",
+      "description": "Name of the domain. Example: Example",
+      "isRequired": true,
       "replaces": "Domain.1",
-      "isRequired": "true",
       "fileRename": "Domain.1"
     },
     "name-dotnet-lower": {
@@ -108,13 +111,15 @@
     },
     "database": {
       "type": "parameter",
+      "description": "If Files and configuration for a database should be generated.",
+      "isRequired": false,
       "dataType": "bool",
       "defaultValue": "true"
     },
     "database-port": {
       "type": "parameter",
       "dataType": "int",
-      "description": "Set a database port. if set to -1 a generated port will be used",
+      "description": "Set a database port. If not set a generated port will be used."
     },
     "port-database-generated": {
       "type": "generated",
@@ -123,8 +128,9 @@
         "fallback": 23100
       }
     },
-    "port-database-replace": {
+    "port-database-lower": {
       "type": "generated",
+      "datatype": "int",
       "generator": "coalesce",
       "parameters": {
         "sourceVariableName": "database-port",
@@ -148,12 +154,6 @@
   ],
   "forms": {
     "invert-database": {
-      "identifier": "evalute",
-      "paramters": {
-        "action": "(!database)"
-      }
-    },
-    "set-database-port": {
       "identifier": "evalute",
       "paramters": {
         "action": "(!database)"
