@@ -40,6 +40,7 @@ public class DatabaseConfigurationCheck : BackgroundService
             {
                 stopwatch.Stop();
                 logger.LogError(exception, "DatabaseConnection can not be established. Duration {ElapsedMilliseconds} ms.", stopwatch.ElapsedMilliseconds);
+                // TODO Increase metrics counter
             }
         }
 
