@@ -6,6 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;database</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <!--#if (database) -->
     <PackageReference Include="Dapper" Version="2.0.123" />

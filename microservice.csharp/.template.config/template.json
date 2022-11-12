@@ -147,7 +147,7 @@
           "exclude": [
             "database/**/*",
             "tools/database*.cmd",
-            "Project.1.Template.1/Repositories/**/*
+            "Project.1.Template.1/Repositories/**/*"
           ]
         }
       ]

@@ -27,11 +27,11 @@ public class Program
     private static void ConfigureDependencyInjection(IServiceCollection services, ConfigurationManager configurationManager)
     {
 #if (database)
-        ConfigureDatabaseConnection(services);
+        ConfigureDatabaseConnection(services, configurationManager);
 #endif
 
 #if (database)
-        void ConfigureDatabaseConnection(IServiceCollection serviceCollection)
+        static void ConfigureDatabaseConnection(IServiceCollection serviceCollection, ConfigurationManager configurationManager)
         {
             serviceCollection.Configure<Repositories.DatabaseConnectionConfig>(configurationManager.GetSection(nameof(Repositories.DatabaseConnectionConfig)));
             serviceCollection.AddSingleton<Repositories.DatabaseConnectionProvider>(); // singleton because the the connection string is only created once

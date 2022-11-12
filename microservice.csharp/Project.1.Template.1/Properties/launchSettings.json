@@ -1,13 +1,14 @@
-﻿{
+{
   "profiles": {
     "project.1-domain.1": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": false,
-      "externalUrlConfiguration": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "dotnetRunMessages": true,
+      "externalUrlConfiguration": true,
+      "applicationUrl": "https://localhost:8080" // if not set you will get a warning that the web server needs to be launched and an url is missing. it is ignoring that launchBrowser was set to false
     }
   }
 }
