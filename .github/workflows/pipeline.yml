@@ -45,8 +45,8 @@ jobs:
     - name : Semantic version
       id: semantic_version
       run: |
-        MAJOR_MINOR_PATCH_VERSION = "${{ env.MAJOR_MINOR_VERSION }}.${{github.run_number}}"
-        SEMANTIC_VERSION = "$MAJOR_MINOR_PATCH_VERSION${{ steps.version_suffix.outputs.version_suffix }}"
+        MAJOR_MINOR_PATCH_VERSION="${{ env.MAJOR_MINOR_VERSION }}.${{github.run_number}}"
+        SEMANTIC_VERSION="$MAJOR_MINOR_PATCH_VERSION${{ steps.version_suffix.outputs.version_suffix }}"
         echo 'MAJOR_MINOR_PATCH_VERSION: ' $MAJOR_MINOR_PATCH_VERSION
         echo 'SEMANTIC_VERSION: ' $SEMANTIC_VERSION
         echo "major_minor_patch_version=$MAJOR_MINOR_PATCH_VERSION" >> $GITHUB_OUTPUT
