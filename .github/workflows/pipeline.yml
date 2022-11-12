@@ -32,21 +32,24 @@ jobs:
             echo 'for default branch pipeline'
             USE=false
             OUTPUT=''
+            PATCH=''
           else
             echo 'for feature branch pipeline'
             USE=true
             OUTPUT=${GITHUB_REF##*/}
+            PATCH="-${OUTPUT}"
           fi
         fi
         echo 'use_version_suffix' $USE
         echo 'version_suffix: ' $OUTPUT
         echo "use_version_suffix=$USE" >> $GITHUB_OUTPUT
         echo "version_suffix=$OUTPUT" >> $GITHUB_OUTPUT
+        echo "patch=$PATCH" >> $GITHUB_OUTPUT
     - name : Semantic version
       id: semantic_version
       run: |
         MAJOR_MINOR_PATCH_VERSION="${{ env.MAJOR_MINOR_VERSION }}.${{github.run_number}}"
-        SEMANTIC_VERSION="${MAJOR_MINOR_PATCH_VERSION}${{ steps.version_suffix.outputs.version_suffix }}"
+        SEMANTIC_VERSION="${MAJOR_MINOR_PATCH_VERSION}${{ steps.version_suffix.outputs.patch }}"
         echo 'MAJOR_MINOR_PATCH_VERSION: ' $MAJOR_MINOR_PATCH_VERSION
         echo 'SEMANTIC_VERSION: ' $SEMANTIC_VERSION
         echo "major_minor_patch_version=$MAJOR_MINOR_PATCH_VERSION" >> $GITHUB_OUTPUT
