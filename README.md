@@ -72,6 +72,9 @@ Lowercase Identity   | Template.1 | My-App.1 | template.1 -> my-app.1
 Lowercase Namespace  | Template.1 | My-App.1 | template._1 -> my_app.1
 Lowercase Class Name | Template.1 | My-App.1 | template__1 -> my_app_1
 
+***Excluding template only config***
+use the conditional expression ```templateonly``` to exlude code that is only there for the template and should never be take to the generated project.
+
 ***Note***
 Not all replacement are already implemented in the template
 
