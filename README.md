@@ -34,14 +34,25 @@ dotnet new microservice --name-dotnet <MyNameOfDomain> --name-project <MyNameOfP
 
 *Example*
 ```bat
-dotnet new microservice --name-dotnet SvcOrder --name-project Restaurant --name-domain Order
+dotnet new microservice --name-dotnet Template.SvcExample --name-project Template --name-domain Example
 ``` 
 
 ### Database
-If the microservice use a database, you must use flyway to patch the database. Use the ```--enable-flyway``` flag.
+The microservice is created with a database by default.
+
+If the microservice do not need a database, you must remove the database. Use the ```--database false``` flag.
 
 ```bat
-dotnet new microservice [..] --enable-flyway
+dotnet new microservice [..] --database false
+```
+
+#### Database port number
+The database port number for local debug is randomly generated to support running multiple services on one localhost.
+
+If you want to use a specific port number us the ```--database-port``` flag.
+
+```bat
+dotnet new microservice [..] --database-port 12345
 ```
 
 # Replacing variables
@@ -70,6 +81,9 @@ Lowercase Identity   | Template.1 | My-App.1 | template.1 -> my-app.1
 Lowercase Namespace  | Template.1 | My-App.1 | template._1 -> my_app.1
 Lowercase Class Name | Template.1 | My-App.1 | template__1 -> my_app_1
 
+***Excluding template only config***
+use the conditional expression ```templateonly``` to exlude code that is only there for the template and should never be take to the generated project.
+
 ***Note***
 Not all replacement are already implemented in the template
 
@@ -79,3 +93,5 @@ Not all replacement are already implemented in the template
 [ConditionalReplacement](https://github.com/dotnet/templating/wiki/Conditional-processing-and-comment-syntax)
 
 [Examples](https://github.com/dotnet/dotnet-template-samples)
+
+[SymbolGenerator](https://github.com/dotnet/templating/wiki/Available-Symbols-Generators)

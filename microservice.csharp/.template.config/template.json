@@ -4,7 +4,7 @@
   "classifications": [ "Web" ],
   "name": "Microservice",
   "identity": "Template.Dotnet.Microservice.CSharp",
-  "groupIdentity":"Template.Dotnet.Microservice",
+  "groupIdentity": "Template.Dotnet.Microservice",
   "shortName": "microservice",
   "tags": {
     "language": "C#",
@@ -21,20 +21,23 @@
   "symbols": {
     "name-dotnet": {
       "type": "parameter",
+      "description": "Name of the dotnet solution and dotnet project. Example: Template.SvcExample",
+      "isRequired": true,
       "replaces": "Template.1",
-      "isRequired": "true",
       "fileRename": "Template.1"
     },
     "name-project": {
       "type": "parameter",
+      "description": "Name of the github project. Example: Template",
+      "isRequired": true,
       "replaces": "Project.1",
-      "isRequired": "true",
       "fileRename": "Project.1"
     },
     "name-domain": {
       "type": "parameter",
+      "description": "Name of the domain. Example: Example",
+      "isRequired": true,
       "replaces": "Domain.1",
-      "isRequired": "true",
       "fileRename": "Domain.1"
     },
     "name-dotnet-lower": {
@@ -106,15 +109,56 @@
       },
       "replaces": "Domain._1"
     },
-    "enable-flyway": {
+    "database": {
       "type": "parameter",
+      "description": "If Files and configuration for a database should be generated.",
+      "isRequired": false,
       "dataType": "bool",
-      "defaultValue": "false"
+      "defaultValue": "true"
     },
-    "flyway": {
-      "type": "derived",
-      "valueSource": "enable-flyway",
-      "valueTransform": "NoTransform"
+    "database-port": {
+      "type": "parameter",
+      "dataType": "int",
+      "description": "Set a database port. If not set a generated port will be used."
+    },
+    "port-database-generated": {
+      "type": "generated",
+      "generator": "port",
+      "parameters": {
+        "fallback": 23100
+      }
+    },
+    "port-database-lower": {
+      "type": "generated",
+      "datatype": "int",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "database-port",
+        "fallbackVariableName": "port-database-generated"
+      },
+      "replaces": "port.database.1"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(!database)",
+          "exclude": [
+            "database/**/*",
+            "tools/database*.cmd",
+            "Project.1.Template.1/Repositories/**/*"
+          ]
+        }
+      ]
+    }
+  ],
+  "forms": {
+    "invert-database": {
+      "identifier": "evalute",
+      "paramters": {
+        "action": "(!database)"
+      }
     }
   }
 }

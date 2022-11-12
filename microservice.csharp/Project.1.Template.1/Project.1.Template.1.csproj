@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -6,12 +6,24 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <!--#if (templateonly) -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;database;templateonly</DefineConstants>
+  </PropertyGroup>
+
+  <!--#endif -->
   <ItemGroup>
-    <PackageReference Include="Grpc.AspNetCore.HealthChecks" Version="2.47.0" />
+    <!--#if (database) -->
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <!--#endif -->
+    <PackageReference Include="Grpc.AspNetCore.HealthChecks" Version="2.49.0" />
+    <!--#if (database) -->
+    <PackageReference Include="Npgsql" Version="7.0.0" />
+    <!--#endif -->
     <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
     <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
-    <PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
   </ItemGroup>
 
 </Project>

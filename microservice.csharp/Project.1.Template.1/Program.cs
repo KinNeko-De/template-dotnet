@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 #pragma warning disable IDE0079 // Remove unnecessary suppression
@@ -23,9 +25,20 @@ namespace Project._1.Template._1;
 
 public class Program
 {
-    private static void ConfigureDependencyInjection(IServiceCollection services, ConfigurationManager configuration)
+    private static void ConfigureDependencyInjection(IServiceCollection services, ConfigurationManager configurationManager)
     {
-        
+#if (database)
+        ConfigureDatabaseConnection(services, configurationManager);
+#endif
+
+#if (database)
+        static void ConfigureDatabaseConnection(IServiceCollection serviceCollection, ConfigurationManager configurationManager)
+        {
+            serviceCollection.Configure<Repositories.DatabaseConnectionConfig>(configurationManager.GetSection(nameof(Repositories.DatabaseConnectionConfig)));
+            serviceCollection.AddSingleton<Repositories.DatabaseConnectionProvider>(); // singleton because the the connection string is only created once
+            serviceCollection.AddHostedService<Repositories.DatabaseConfigurationCheck>();
+        }
+#endif
     }
 
     public static async Task<int> Main(string[] args)
