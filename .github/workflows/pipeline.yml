@@ -27,6 +27,7 @@ jobs:
           echo 'for pull request pipeline'
           USE=true
           OUTPUT=${GITHUB_HEAD_REF##*/}
+          PATCH="-${OUTPUT}"
         else
           if [[ ${{ github.ref }} == "refs/heads/${{ github.event.repository.default_branch }}" ]]; then
             echo 'for default branch pipeline'
