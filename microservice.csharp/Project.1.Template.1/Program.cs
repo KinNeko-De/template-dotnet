@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 #pragma warning disable IDE0079 // Remove unnecessary suppression
@@ -35,6 +36,7 @@ public class Program
         {
             serviceCollection.Configure<Repositories.DatabaseConnectionConfig>(configurationManager.GetSection(nameof(Repositories.DatabaseConnectionConfig)));
             serviceCollection.AddSingleton<Repositories.DatabaseConnectionProvider>(); // singleton because the the connection string is only created once
+            serviceCollection.AddHostedService<Repositories.DatabaseConfigurationCheck>();
         }
 #endif
     }
