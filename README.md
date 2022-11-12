@@ -46,6 +46,15 @@ If the microservice do not need a database, you must remove the database. Use th
 dotnet new microservice [..] --database false
 ```
 
+#### Database port number
+The database port number for local debug is randomly generated to support running multiple services on one localhost.
+
+If you want to use a specific port number us the ```--database-port``` flag.
+
+```bat
+dotnet new microservice [..] --database-port 12345
+```
+
 # Replacing variables
 
 ***From dotnet templating***
