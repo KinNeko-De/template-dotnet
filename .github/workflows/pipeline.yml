@@ -43,8 +43,8 @@ jobs:
         fi
         echo 'use_version_suffix' $USE
         echo 'version_suffix: ' $OUTPUT
-        echo "use_version_suffix=$USE" >> $GITHUB_OUTPUT
         echo "version_suffix=$OUTPUT" >> $GITHUB_OUTPUT
+        echo "use_version_suffix=$USE" >> $GITHUB_OUTPUT
         echo "patch=$PATCH" >> $GITHUB_OUTPUT
     - name : Semantic version
       id: semantic_version
@@ -53,8 +53,8 @@ jobs:
         SEMANTIC_VERSION="${MAJOR_MINOR_PATCH_VERSION}${{ steps.version_suffix.outputs.patch }}"
         echo 'MAJOR_MINOR_PATCH_VERSION: ' $MAJOR_MINOR_PATCH_VERSION
         echo 'SEMANTIC_VERSION: ' $SEMANTIC_VERSION
-        echo "major_minor_patch_version=$MAJOR_MINOR_PATCH_VERSION" >> $GITHUB_OUTPUT
         echo "semantic_version=$SEMANTIC_VERSION" >> $GITHUB_OUTPUT
+        echo "major_minor_patch_version=$MAJOR_MINOR_PATCH_VERSION" >> $GITHUB_OUTPUT
     - name: Set dotnet parameter
       id: dotnet
       run: |
