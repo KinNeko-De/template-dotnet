@@ -11,7 +11,7 @@ on:
       - 'docs/**'
       
 env:
-  SEMANTIC_VERSION: 0.1.${{github.run_number}}
+  MAJOR_MINOR_VERSION: 0.1
 
 name: template-dotnet
 
@@ -20,7 +20,7 @@ jobs:
     name: "Pack template-dotnet and publish it"
     runs-on: ubuntu-latest
     steps:
-    - name: Extract version_suffix
+    - name: Version suffix
       id: version_suffix
       run: |
         if [[ ${{ github.event_name }} == 'pull_request' ]]; then
@@ -32,21 +32,33 @@ jobs:
             echo 'for default branch pipeline'
             USE=false
             OUTPUT=''
+            PATCH=''
           else
             echo 'for feature branch pipeline'
             USE=true
             OUTPUT=${GITHUB_REF##*/}
+            PATCH="-${OUTPUT}"
           fi
         fi
         echo 'use_version_suffix' $USE
         echo 'version_suffix: ' $OUTPUT
         echo "use_version_suffix=$USE" >> $GITHUB_OUTPUT
         echo "version_suffix=$OUTPUT" >> $GITHUB_OUTPUT
+        echo "patch=$PATCH" >> $GITHUB_OUTPUT
+    - name : Semantic version
+      id: semantic_version
+      run: |
+        MAJOR_MINOR_PATCH_VERSION="${{ env.MAJOR_MINOR_VERSION }}.${{github.run_number}}"
+        SEMANTIC_VERSION="${MAJOR_MINOR_PATCH_VERSION}${{ steps.version_suffix.outputs.patch }}"
+        echo 'MAJOR_MINOR_PATCH_VERSION: ' $MAJOR_MINOR_PATCH_VERSION
+        echo 'SEMANTIC_VERSION: ' $SEMANTIC_VERSION
+        echo "major_minor_patch_version=$MAJOR_MINOR_PATCH_VERSION" >> $GITHUB_OUTPUT
+        echo "semantic_version=$SEMANTIC_VERSION" >> $GITHUB_OUTPUT
     - name: Set dotnet parameter
       id: dotnet
       run: |
         ARGS=()
-        ARGS+=("-p:VersionPrefix=${{ env.SEMANTIC_VERSION }}")
+        ARGS+=("-p:VersionPrefix=${{ steps.semantic_version.outputs.major_minor_patch_version }}")
         if [[ "${{ steps.version_suffix.outputs.use_version_suffix }}" == 'true' ]]; then
           ARGS+=('--version-suffix' "${{ steps.version_suffix.outputs.version_suffix }}")
         fi
@@ -67,3 +79,13 @@ jobs:
         dotnet pack --no-restore --no-build -c Release ${{ steps.dotnet.outputs.parameters }}
     - name: Publish
       run: dotnet nuget push **\**.nupkg --source "https://nuget.pkg.github.com/KinNeko-De" --api-key ${{ secrets.GITHUB_TOKEN }}
+    - name: Create semantic versioning git tag
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.git.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: "refs/tags/${{ steps.semantic_version.outputs.semantic_version }}",
+            sha: context.sha
+          })
