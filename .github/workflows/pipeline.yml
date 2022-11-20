@@ -69,7 +69,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: 6.x
+        dotnet-version: 7.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
@@ -79,7 +79,7 @@ jobs:
       run: |
         dotnet pack --no-restore --no-build -c Release ${{ steps.dotnet.outputs.parameters }}
     - name: Publish
-      run: dotnet nuget push **\**.nupkg --source "https://nuget.pkg.github.com/KinNeko-De" --api-key ${{ secrets.GITHUB_TOKEN }}
+      run: dotnet nuget push **\**.nupkg --source "https://nuget.pkg.github.com/KinNeko-De" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
     - name: Create semantic versioning git tag
       uses: actions/github-script@v6
       with:
