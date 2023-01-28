@@ -28,6 +28,17 @@ services:
         condition: service_healthy
     volumes:
       - ./patch:/sql
+  project.1-domain.1-db-patch-validate:
+    image: flyway/flyway
+    command: validate -user=${DB_USER} -password=${DB_PASSWORD} -url="jdbc:postgresql://project.1-domain.1-db:5432/${DB_DATABASE}" -schemas=${DB_SCHEMA} -locations='filesystem:/sql'
+    networks:
+      - dev-net
+    container_name: project.1-domain.1-db-patch-validate
+    depends_on:
+      project.1-domain.1-db-patch:
+        condition: service_completed_successfully
+    volumes:
+      - ./patch:/sql
 networks:
   dev-net:
     name: project.1-dev-net
