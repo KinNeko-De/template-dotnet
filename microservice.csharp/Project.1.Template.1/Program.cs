@@ -125,14 +125,11 @@ public class Program
     private static void ConfigureApp(WebApplication app)
     {
         app.UseRouting();
-        
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapHealthChecks("/health/live", new HealthCheckOptions() { Predicate = _ => false }); // runs no checks, just to test if application is live
-            endpoints.MapHealthChecks("/health/ready", new HealthCheckOptions()); // run all health checks
-            endpoints.MapGrpcService<Operations.HealthChecks.Grpc.GrpcHealthCheck>();
-            endpoints.MapControllers();
-        });
+
+        app.MapHealthChecks("/health/live", new HealthCheckOptions() { Predicate = _ => false }); // runs no checks, just to test if application is live
+        app.MapHealthChecks("/health/ready", new HealthCheckOptions()); // run all health checks
+        app.MapGrpcService<Operations.HealthChecks.Grpc.GrpcHealthCheck>();
+        app.MapControllers();
     }
 
     private static void ConfigureHost(ConfigureHostBuilder host)
