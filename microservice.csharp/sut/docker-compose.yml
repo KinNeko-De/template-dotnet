@@ -20,7 +20,7 @@ services:
       retries: 5
     environment:
     - DatabaseConnectionConfig__Host=project.1-domain.1-db
-    - DatabaseConnectionConfig__Port=port.database.1
+    - DatabaseConnectionConfig__Port=5432
     - DatabaseConnectionConfig__Database=domain.1database
     - DatabaseConnectionConfig__User=domain.1user
     - DatabaseConnectionConfig__Password=domain.1password
