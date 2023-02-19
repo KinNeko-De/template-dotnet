@@ -37,6 +37,7 @@ dotnet new microservice --name-dotnet <MyNameOfDotnetProject> --name-project <My
 dotnet new microservice --name-dotnet SvcExample --name-project Template --name-domain Example
 ``` 
 
+
 ### Database
 The microservice is created with a database by default.
 
@@ -54,6 +55,14 @@ If you want to use a specific port number us the ```--database-port``` flag.
 ```bat
 dotnet new microservice [..] --database-port 12345
 ```
+
+### Multiple services for a domain
+If you want to create multiple services for the same domain, as example a service and an api gateway, you can also set the the type of the service.
+
+*Example*
+```bat
+dotnet new microservice --name-dotnet SvcExample --name-project Template --name-domain Example --name-type Api-Gateway --database false
+``` 
 
 # Replacing variables
 

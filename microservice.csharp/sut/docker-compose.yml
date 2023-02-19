@@ -1,11 +1,11 @@
 version: '3.9'
 
 services:
-  project.1-domain.1-svc:
-    image: project.1.domain.1-svc
+  project.1-domain.1-type.1:
+    image: project.1.domain.1-type.1
     networks:
       - dev-net
-    container_name: project.1.domain.1-svc
+    container_name: project.1.domain.1-type.1
     build:
       dockerfile: dockerfile
     ports:
@@ -38,7 +38,7 @@ services:
     - Serilog__WriteTo__0__Args__theme=Serilog.Sinks.SystemConsole.Themes.AnsiConsoleTheme::Code, Serilog.Sinks.Console
     - Serilog__WriteTo__0__Args__outputTemplate=[{Timestamp:o}] [{Level:u3}] [{Application}] [{Message}] [{Exception}] [{Properties:j}] {NewLine}
     - Serilog__Enrich=FromLogContext
-    - Serilog__Properties__Application=project.1.domain.1-svc
+    - Serilog__Properties__Application=project.1.domain.1-type.1
 networks:
   dev-net:
     name: project.1-dev-net
