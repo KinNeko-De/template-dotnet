@@ -29,7 +29,7 @@ The template must be used to create new projects
 To create a new project based on the ```microservice``` template use  
 
 ```bat
-dotnet new microservice --name-dotnet <MyNameOfDotnetProject> --name-project <MyNameOfProject> --name-domain <M<NameOfDomain>
+dotnet new microservice --name-dotnet <MyNameOfDotnetProject> --name-project <MyNameOfProject> --name-domain <MyNameOfDomain>
 ``` 
 
 *Example*
