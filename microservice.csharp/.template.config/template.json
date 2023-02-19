@@ -21,7 +21,7 @@
   "symbols": {
     "name-dotnet": {
       "type": "parameter",
-      "description": "Name of the dotnet solution and dotnet project. Example: Template.SvcExample",
+      "description": "Name of the dotnet solution and dotnet project. Project name will be added in front. Example: SvcExample",
       "isRequired": true,
       "replaces": "Template.1",
       "fileRename": "Template.1"
@@ -39,6 +39,14 @@
       "isRequired": true,
       "replaces": "Domain.1",
       "fileRename": "Domain.1"
+    },
+    "name-type": {
+      "type": "parameter",
+      "description": "Type of the service. Example: Svc / Api-gateway",
+      "isRequired": false,
+      "defaultValue": "Svc",
+      "replaces": "Type.1",
+      "fileRename": "Type.1"
     },
     "name-dotnet-lower": {
       "type": "generated",
@@ -108,6 +116,29 @@
         ]
       },
       "replaces": "Domain._1"
+    },
+    "name-type-lower": {
+      "type": "generated",
+      "generator": "casing",
+      "parameters": {
+        "source": "name-type",
+        "toLower": true
+      },
+      "replaces": "type.1"
+    },
+    "name-type-namespace": {
+      "type": "generated",
+      "generator": "regex",
+      "parameters": {
+        "source": "name-type",
+        "steps": [
+          {
+            "regex": "-",
+            "replacement": "_"
+          }
+        ]
+      },
+      "replaces": "Type._1"
     },
     "database": {
       "type": "parameter",
