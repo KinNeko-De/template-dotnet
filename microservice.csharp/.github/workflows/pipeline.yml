@@ -36,8 +36,10 @@ jobs:
 
     - name: Create docker network
       run: 'docker network create project.1-dev-net'
+//#if (database)
     - name: Start database
       run: docker compose -f database/docker-compose.yml up --wait --quiet-pull
+//#endif
     - name: ComponentTest
       run: dotnet test Tests/*.ComponentTest --no-build --no-restore -c Release -p:Version=${{ env.SEMANTIC_VERSION }} --verbosity normal --collect:"XPlat Code Coverage" --settings Tests/coverlet.runsettings --results-directory=Tests/coverage
       timeout-minutes: 20
@@ -51,13 +53,17 @@ jobs:
       run: dotnet test Tests/*.IntegrationTest --no-build --no-restore -c Release -p:Version=${{ env.SEMANTIC_VERSION }} --verbosity normal --collect:"XPlat Code Coverage" --settings Tests/coverlet.runsettings --results-directory=Tests/coverage
       timeout-minutes: 10
 
+//#if (database)
     - name: Show database logs
       run: docker compose -f database/docker-compose.yml logs
+//#endif
     - name: Show system under test logs
       run: docker compose -f sut/docker-compose.yml logs
+//#if (database)
     - name: Stop database
       if: always()
       run: docker compose -f database/docker-compose.yml down
+//#endif
     - name: Stop system under test
       if: always()
       run: docker compose -f sut/docker-compose.yml down
