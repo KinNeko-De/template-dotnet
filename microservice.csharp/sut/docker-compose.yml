@@ -19,6 +19,7 @@ services:
       start_period: 5s
       retries: 5
     environment:
+//#if (database)
     - DatabaseConnectionConfig__Host=project.1-domain.1-db
     - DatabaseConnectionConfig__Port=5432
     - DatabaseConnectionConfig__Database=domain.1database
@@ -27,6 +28,7 @@ services:
     - DatabaseConnectionConfig__MaxPoolSize=5
     - DatabaseConnectionConfig__SearchPath=domain.1
     - DatabaseConnectionConfig__SslMode=Prefer
+//#endif
     - Serilog__Using=Serilog.Sinks.Console
     - Serilog__MinimumLevel__Default=Information
     - Serilog__MinimumLevel__Override__Microsoft=Warning
