@@ -1,4 +1,5 @@
 version: '3.9'
+name: project.1-domain.1-db
 services:
   project.1-domain.1-db:
     image: postgres

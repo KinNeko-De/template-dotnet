@@ -1,5 +1,5 @@
 version: '3.9'
-
+name: project.1-domain.1-type.1
 services:
   project.1-domain.1-type.1:
     image: project.1.domain.1-type.1
