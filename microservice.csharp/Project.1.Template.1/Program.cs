@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 #pragma warning disable IDE0079 // Remove unnecessary suppression
@@ -89,15 +87,26 @@ public class Program
     private static void ConfigureServices(IServiceCollection services, ConfigurationManager configuration)
     {
         ConfigureDependencyInjection(services, configuration);
+
+        services.AddGrpc();
+        services.AddControllers().AddControllersAsServices();
+
+        const string live = "live";
+        const string ready = "ready";
         services.AddHealthChecks()
             .AddCheck<Operations.HealthChecks.Diagnostics.HttpHealthCheck>(
                 "http_health_check",
                 HealthStatus.Unhealthy,
-                new[] { "ready" });
-
-        services.AddControllers().AddControllersAsServices();
-
-        services.AddGrpc();
+                new[] { ready });
+        services.AddGrpcHealthChecks(options =>
+            {
+                options.Services.MapService(live, _ => false);
+                options.Services.MapService(ready, check => check.Tags.Contains(ready));
+            })
+            .AddCheck<Operations.HealthChecks.Grpc.GrpcHealthCheck>(
+                "grpc_health_check",
+                HealthStatus.Unhealthy,
+                new[] { ready });
     }
 
     private static void ConfigureConfiguration(IConfigurationBuilder configuration)
@@ -128,7 +137,7 @@ public class Program
 
         app.MapHealthChecks("/health/live", new HealthCheckOptions() { Predicate = _ => false }); // runs no checks, just to test if application is live
         app.MapHealthChecks("/health/ready", new HealthCheckOptions()); // run all health checks
-        app.MapGrpcService<Operations.HealthChecks.Grpc.GrpcHealthCheck>();
+        app.MapGrpcHealthChecksService();
         app.MapControllers();
     }
 
