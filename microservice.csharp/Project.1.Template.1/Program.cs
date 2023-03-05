@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+#if (metric)
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Metrics;
+#endif
 using Serilog;
 using Serilog.Events;
 #pragma warning disable IDE0079 // Remove unnecessary suppression
@@ -28,6 +32,10 @@ public class Program
 #if (database)
         ConfigureDatabaseConnection(services, configurationManager);
 #endif
+#if (metric)
+        ConfigureMetrics();
+        ConfigureMetricsEndpoint();
+#endif
 
 #if (database)
         static void ConfigureDatabaseConnection(IServiceCollection serviceCollection, ConfigurationManager configurationManager)
@@ -37,7 +45,30 @@ public class Program
             serviceCollection.AddHostedService<Repositories.DatabaseConfigurationCheck>();
         }
 #endif
+
+#if (metric)
+        void ConfigureMetrics()
+        {
+            services.AddSingleton<Operations.Metrics.Metric>();
+        }
+
+        void ConfigureMetricsEndpoint()
+        {
+            services.AddOpenTelemetry()
+                .WithMetrics(metricBuilder => metricBuilder
+                        .AddMeter(Operations.Metrics.Metric.ApplicationName)
+//-:cnd:noEmit
+#if DEBUG
+//+:cnd:noEmit
+                        .AddConsoleExporter(builder => builder.Targets = ConsoleExporterOutputTargets.Console)
+//-:cnd:noEmit
+#endif
+//+:cnd:noEmit
+                );
+        }
+#endif
     }
+
 
     public static async Task<int> Main(string[] args)
     {

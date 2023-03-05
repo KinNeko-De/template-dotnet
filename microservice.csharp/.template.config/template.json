@@ -168,7 +168,14 @@
         "fallbackVariableName": "port-database-generated"
       },
       "replaces": "port.database.1"
-    }
+    },
+    "metric": {
+      "type": "parameter",
+      "description": "If Files and configuration for metric using OpenTelemetry should be generated.",
+      "isRequired": false,
+      "dataType": "bool",
+      "defaultValue": "true"
+    },
   },
   "sources": [
     {
@@ -181,7 +188,13 @@
             "Project.1.Template.1/Repositories/**/*",
             "Tests/Project.1.Template.1.Testing/Repositories/**/*"
           ]
-        }
+        },
+        {
+          "condition": "(!metric)",
+          "exclude": [
+            "Project.1.Template.1/Operations/Metrics/**/*",
+          ]
+        },
       ]
     }
   ],
