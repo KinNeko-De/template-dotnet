@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
-
+#if (metric)
+using Project._1.Template._1.Operations.Metrics;
+#endif
 
 namespace Project._1.Template._1.Repositories;
 
@@ -10,14 +12,23 @@ namespace Project._1.Template._1.Repositories;
 public class DatabaseConfigurationCheck : BackgroundService
 {
     private readonly ILogger<DatabaseConfigurationCheck> logger;
+#if (metric)
+    private readonly Metric metric;
+#endif
     private readonly DatabaseConnectionProvider databaseConnectionProvider;
 
     public DatabaseConfigurationCheck(
         ILogger<DatabaseConfigurationCheck> logger,
+#if (metric)
+        Metric metric,
+#endif
         DatabaseConnectionProvider databaseConnectionProvider
         )
     {
         this.logger = logger;
+#if (metric)
+        this.metric = metric;
+#endif
         this.databaseConnectionProvider = databaseConnectionProvider;
     }
 
@@ -40,7 +51,9 @@ public class DatabaseConfigurationCheck : BackgroundService
             {
                 stopwatch.Stop();
                 logger.LogError(exception, "DatabaseConnection can not be established. Duration {ElapsedMilliseconds} ms.", stopwatch.ElapsedMilliseconds);
-                // TODO Increase metrics counter
+#if (metric)
+                metric.DatabaseConnectionErrorOccurred();
+#endif
             }
         }
 

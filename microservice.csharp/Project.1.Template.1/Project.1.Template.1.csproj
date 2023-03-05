@@ -8,7 +8,7 @@
 
   <!--#if (templateonly) -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>$(DefineConstants)TRACE;database;templateonly</DefineConstants>
+    <DefineConstants>$(DefineConstants)TRACE;database;metric;templateonly</DefineConstants>
   </PropertyGroup>
 
   <!--#endif -->
@@ -19,6 +19,10 @@
     <PackageReference Include="Grpc.AspNetCore.HealthChecks" Version="2.50.0" />
     <!--#if (database) -->
     <PackageReference Include="Npgsql" Version="7.0.0" />
+    <!--#endif -->
+    <!--#if (metric) -->
+    <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.4.0" Condition="'$(Configuration)' == 'DEBUG'"/>
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.4.0" />
     <!--#endif -->
     <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
     <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />

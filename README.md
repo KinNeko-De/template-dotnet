@@ -41,7 +41,7 @@ dotnet new microservice --name-dotnet SvcExample --name-project Template --name-
 ### Database
 The microservice is created with a database by default.
 
-If the microservice do not need a database, you must remove the database. Use the ```--database false``` flag.
+If the microservice does not need a database, you must remove the database. Use the ```--database false``` flag.
 
 ```bat
 dotnet new microservice [..] --database false
@@ -54,6 +54,15 @@ If you want to use a specific port number us the ```--database-port``` flag.
 
 ```bat
 dotnet new microservice [..] --database-port 12345
+```
+
+### Metric
+Metrics are created by default using OpenTelemtry
+
+If the microservice does not need metrics, you must remove the metrics. Use the ```--metric false``` flag.
+
+```bat
+dotnet new microservice [..] --metric false
 ```
 
 ### Multiple services for a domain
