@@ -9,10 +9,10 @@ services:
     build:
       dockerfile: dockerfile
     ports:
-      - "3118:3118"
+      - "3110:3110"
       - "80:8080"
     healthcheck:
-      # test: ["CMD", "bin/grpc_health_probe-linux-amd64", "-addr=localhost:3118", "||", "echo %errorlevel%"]
+      # test: ["CMD", "bin/grpc_health_probe-linux-amd64", "-addr=localhost:3110", "||", "echo %errorlevel%"]
       test: curl --fail http://localhost:8080/health/ready || exit 1
       interval: 1s
       timeout: 3s
