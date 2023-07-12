@@ -219,7 +219,7 @@ public class Program
         webHost.ConfigureKestrel((context, serverOptions) =>
         {
             serverOptions.ListenAnyIP(8080, listenOptions => { listenOptions.Protocols = HttpProtocols.Http1; });
-            serverOptions.ListenAnyIP(3118, listenOptions => { listenOptions.Protocols = HttpProtocols.Http2; });
+            serverOptions.ListenAnyIP(3110, listenOptions => { listenOptions.Protocols = HttpProtocols.Http2; });
             // serverOptions.ListenAnyIP(7106, listenOptions => { listenOptions.Protocols = HttpProtocols.Http3; });
         });
     }
