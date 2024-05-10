@@ -69,7 +69,6 @@ public class Program
 #endif
     }
 
-
     public static async Task<int> Main(string[] args)
     {
         try
