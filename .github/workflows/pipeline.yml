@@ -11,9 +11,9 @@ on:
       - 'docs/**'
       
 env:
-  MAJOR_MINOR_VERSION: 0.1
+  MAJOR_MINOR_VERSION: 0.2
 
-name: template-dotnet
+name: ci-template-dotnet
 
 jobs:
   publish_template:
