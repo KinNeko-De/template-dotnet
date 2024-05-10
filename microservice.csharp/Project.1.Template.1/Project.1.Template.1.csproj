@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -14,20 +14,20 @@
   <!--#endif -->
   <ItemGroup>
     <!--#if (database) -->
-    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="Dapper" Version="2.1.35" />
     <!--#endif -->
-    <PackageReference Include="Grpc.AspNetCore.HealthChecks" Version="2.50.0" />
+    <PackageReference Include="Grpc.AspNetCore.HealthChecks" Version="2.62.0" />
     <!--#if (database) -->
-    <PackageReference Include="Npgsql" Version="7.0.0" />
+    <PackageReference Include="Npgsql" Version="8.0.3" />
     <!--#endif -->
     <!--#if (metric) -->
-    <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.4.0" Condition="'$(Configuration)' == 'DEBUG'"/>
-    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.4.0" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.8.1" Condition="'$(Configuration)' == 'DEBUG'" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.8.1" />
     <!--#endif -->
-    <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
-    <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
-    <PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
+    <PackageReference Include="Serilog.Formatting.Compact" Version="2.0.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
   </ItemGroup>
 
 </Project>
