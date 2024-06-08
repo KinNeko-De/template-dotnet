@@ -65,11 +65,11 @@ jobs:
         fi
         echo 'parameters' ${ARGS[@]}
         echo "parameters=${ARGS[@]}" >> $GITHUB_OUTPUT
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Setup .NET
-      uses: actions/setup-dotnet@v2
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 7.x
+        dotnet-version: 8.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
@@ -81,7 +81,7 @@ jobs:
     - name: Publish
       run: dotnet nuget push **\**.nupkg --source "https://nuget.pkg.github.com/KinNeko-De" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
     - name: Create semantic versioning git tag
-      uses: actions/github-script@v6
+      uses: actions/github-script@v7
       with:
         script: |
           github.rest.git.createRef({
