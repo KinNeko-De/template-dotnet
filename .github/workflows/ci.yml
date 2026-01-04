@@ -11,7 +11,7 @@ on:
       - 'docs/**'
       
 env:
-  MAJOR_MINOR_VERSION: 0.2
+  MAJOR_MINOR_VERSION: 0.3
 
 name: ci-template-dotnet
 
