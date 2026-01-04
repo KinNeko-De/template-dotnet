@@ -2,12 +2,18 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-#if (metric)
-using OpenTelemetry.Exporter;
-using OpenTelemetry.Metrics;
-#endif
 using Serilog;
 using Serilog.Events;
+#if (metric)
+//-:cnd:noEmit
+#if DEBUG
+//+:cnd:noEmit
+using OpenTelemetry.Exporter;
+//-:cnd:noEmit
+#endif
+//+:cnd:noEmit
+using OpenTelemetry.Metrics;
+#endif
 #pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable IDE0005
 // ReSharper disable once RedundantUsingDirective
@@ -18,6 +24,7 @@ using Serilog.Formatting.Compact;
 #pragma warning disable IDE0005
 // ReSharper disable once RedundantUsingDirective
 using Serilog.Sinks.SystemConsole.Themes;
+
 #pragma warning restore IDE0079 // Remove unnecessary suppression
 #pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning restore IDE0005
@@ -41,7 +48,7 @@ public class Program
         static void ConfigureDatabaseConnection(IServiceCollection serviceCollection, ConfigurationManager configurationManager)
         {
             serviceCollection.Configure<Repositories.DatabaseConnectionConfig>(configurationManager.GetSection(nameof(Repositories.DatabaseConnectionConfig)));
-            serviceCollection.AddSingleton<Repositories.DatabaseConnectionProvider>(); // singleton because the the connection string is only created once
+            serviceCollection.AddSingleton<Repositories.DatabaseConnectionProvider>(); // singleton because the connection string is only created once
             serviceCollection.AddHostedService<Repositories.DatabaseConfigurationCheck>();
         }
 #endif
@@ -97,10 +104,10 @@ public class Program
         }
         finally
         {
-            Log.CloseAndFlush();
+            await Log.CloseAndFlushAsync();
             SetSerilogDefaultLogger();
             Log.ForContext<Program>().Information("Application stopped.");
-            Log.CloseAndFlush();
+            await Log.CloseAndFlushAsync();
         }
     }
 
@@ -130,13 +137,13 @@ public class Program
                 new[] { ready });
         services.AddGrpcHealthChecks(options =>
             {
-                options.Services.MapService(live, _ => false);
-                options.Services.MapService(ready, check => check.Tags.Contains(ready));
+                options.Services.Map(live, _ => false);
+                options.Services.Map(ready, check => check.Tags.Contains(ready));
             })
             .AddCheck<Operations.HealthChecks.Grpc.GrpcHealthCheck>(
                 "grpc_health_check",
                 HealthStatus.Unhealthy,
-                new[] { ready });
+                [ready]);
     }
 
     private static void ConfigureConfiguration(IConfigurationBuilder configuration)
@@ -165,7 +172,7 @@ public class Program
     {
         app.UseRouting();
 
-        app.MapHealthChecks("/health/live", new HealthCheckOptions() { Predicate = _ => false }); // runs no checks, just to test if application is live
+        app.MapHealthChecks("/health/live", new HealthCheckOptions { Predicate = _ => false }); // runs no checks, just to test if application is live
         app.MapHealthChecks("/health/ready", new HealthCheckOptions()); // run all health checks
         app.MapGrpcHealthChecksService();
         app.MapControllers();
